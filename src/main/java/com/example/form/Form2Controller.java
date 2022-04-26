@@ -1,6 +1,7 @@
 package com.example.form;
 
 import com.example.form.model.Persona;
+import com.example.form.util.ConexionBBDD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,6 +11,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 import java.lang.reflect.Array;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,15 +34,35 @@ public class Form2Controller {
     @FXML
     public TextField txtEdad;
 
+// Conexión
+    private ConexionBBDD connection;
+    private ResultSet resultSet;
+
+
+
 
     ObservableList<Persona> personas = FXCollections.observableArrayList();
 
 // Crea un la lista con varias personas de ejemplo
-    private List<Persona> cargarDatos(){
+    private List<Persona> cargarDatos() throws SQLException {
+        // Cargamos desde una base de datos
+        connection=new ConexionBBDD();
+        // Nos conectamos
+        connection.getConexion();
+        // Cargamos los datos
+        resultSet=connection.ejecutarConsulta("SELECT * FROM personas");
+
         List<Persona> listaPersonas = new ArrayList<>();
-        listaPersonas.add(new Persona("Nombre1","Apellido1",25));
-        listaPersonas.add(new Persona("Nombre2","Apellido2",26));
-        listaPersonas.add(new Persona("Nombre3","Apellido3",27));
+        String nombre="";
+        String apellidos="";
+        int edad=0;
+
+        while (resultSet.next()){
+            nombre=resultSet.getString("nombre");
+            apellidos=resultSet.getString("apellidos");
+            edad=Integer.parseInt(resultSet.getString("edad"));
+            listaPersonas.add(new Persona(nombre,apellidos,edad));
+        }
 
         return listaPersonas;
 
@@ -47,7 +71,7 @@ public class Form2Controller {
 
     // El método initialize (siempre ejecuta desde el inicio)
     @FXML
-    private void initialize(){
+    private void initialize() throws SQLException {
         personas.addAll(cargarDatos());//carga los datos
         // Ir poniendo las columnas
         // Indicar a JavaFX que dato tiene cada columna
