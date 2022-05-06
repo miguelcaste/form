@@ -19,6 +19,8 @@
       <TextField fx:id="txtNombre" layoutX="229.0" layoutY="22.0" promptText="Nombre" />
       <TextField fx:id="txtApellidos" layoutX="229.0" layoutY="61.0" promptText="Apellidos" />
       <TextField fx:id="txtEdad" layoutX="228.0" layoutY="99.0" promptText="Edad" />
-      <Button fx:id="btnBorrar" layoutX="311.0" layoutY="140.0" mnemonicParsing="false" onAction="#onBorrarButtonClick" text="Borrar" />
+      <Button fx:id="btnBorrar" layoutX="377.0" layoutY="140.0" mnemonicParsing="false" onAction="#onBorrarButtonClick" text="Borrar" />
+      <Button fx:id="btnActualizar" layoutX="466.0" layoutY="74.0" mnemonicParsing="false" onAction="#onActualizarButtonClick" text="Refrescar BBDD" />
+      <Button fx:id="btnUpdate" layoutX="300.0" layoutY="140.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" text="Actualizar" />
    </children>
 </Pane>

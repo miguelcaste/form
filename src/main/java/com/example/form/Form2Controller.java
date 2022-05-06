@@ -89,13 +89,152 @@ public class Form2Controller {
         String nombre=txtNombre.getText();
         String apellidos=txtNombre.getText();
         int edad=Integer.parseInt(txtEdad.getText());
+        Persona p=new Persona(nombre,apellidos,edad);
+        personas.add(p);//añadirlo al array
 
-        personas.add(new Persona(nombre,apellidos,edad));
+        String sql="INSERT INTO personas values (NULL,'"+p.getNombre()+"','"+p.getApellidos()+"','"+p.getEdad()+"')";
+        System.out.println(sql);
+        connection.ejecutarConsultaDelete(sql);//Deberia guardar el id
 
+        tbvPersonas.getSelectionModel().select(p);
     }
 
     public void onBorrarButtonClick(ActionEvent actionEvent) {
         Persona persona=tbvPersonas.getSelectionModel().getSelectedItem();
         personas.remove(persona);
+
+
+        // Borrado SQL
+       // connection=new ConexionBBDD();
+        // Nos conectamos
+      //  connection.getConexion();
+
+        String consulta="DELETE FROM personas WHERE nombre='"+persona.getNombre()+"'";
+        System.out.println(consulta);
+        connection.ejecutarConsultaDelete(consulta);//Deberia guardar el id
+
+
     }
+
+    public void onActualizarButtonClick(ActionEvent actionEvent) throws SQLException { //Botón de actualizar
+        personas.removeAll(personas);
+        personas.addAll(cargarDatos());//carga los datos
+    }
+
+    // QUedan de tarea para actualizar
+
+    public void onUpdateButtonClick(ActionEvent actionEvent) {
+//        String consulta="DELETE FROM personas WHERE nombre='"+persona.getNombre()+"'";
+//        System.out.println(consulta);
+//        connection.ejecutarConsultaDelete(consulta);//Deberia guardar el id
+
+
+    }
+
+
+    // El editar lo dejo de tarea
+    // Seria con execute
+    //String sql="UPDATE CLIENTE SET cedula='"+cliente.getCedula()+"', nombres='"+cliente.getNombre()+"', apellidos='"+cliente.getApellido()+"'" +" WHERE ID="+cliente.getId();
+
+
+
+
+
+//    private Person selectedPerson;
+//    private final BooleanProperty modifiedProperty = new SimpleBooleanProperty(false);
+//    private ChangeListener<Person> personChangeListener;
+//
+//
+//    @Override
+//    public void initialize(URL url, ResourceBundle rb) {
+//
+//        // Disable the Remove/Edit buttons if nothing is selected in the ListView control
+//        removeButton.disableProperty().bind(listView.getSelectionModel().selectedItemProperty().isNull());
+//        updateButton.disableProperty().bind(listView.getSelectionModel().selectedItemProperty().isNull()
+//                .or(modifiedProperty.not())
+//                .or(firstnameTextField.textProperty().isEmpty()
+//                        .or(lastnameTextField.textProperty().isEmpty())));
+//        createButton.disableProperty().bind(listView.getSelectionModel().selectedItemProperty().isNotNull()
+//                .or(firstnameTextField.textProperty().isEmpty()
+//                        .or(lastnameTextField.textProperty().isEmpty())));
+//
+//        SampleData.fillSampleData(personList);
+//
+//        // Use a sorted list; sort by lastname; then by firstname
+//        SortedList<Person> sortedList = new SortedList<>(personList);
+//
+//        // sort by lastname first, then by firstname; ignore notes
+//        sortedList.setComparator((p1, p2) -> {
+//            int result = p1.getLastname().compareToIgnoreCase(p2.getLastname());
+//            if (result == 0) {
+//                result = p1.getFirstname().compareToIgnoreCase(p2.getFirstname());
+//            }
+//            return result;
+//        });
+//        listView.setItems(sortedList);
+//
+//        listView.getSelectionModel().selectedItemProperty().addListener(
+//                personChangeListener = (observable, oldValue, newValue) -> {
+//                    System.out.println("Selected item: " + newValue);
+//                    // newValue can be null if nothing is selected
+//                    selectedPerson = newValue;
+//                    modifiedProperty.set(false);
+//                    if (newValue != null) {
+//                        // Populate controls with selected Person
+//                        firstnameTextField.setText(selectedPerson.getFirstname());
+//                        lastnameTextField.setText(selectedPerson.getLastname());
+//                        notesTextArea.setText(selectedPerson.getNotes());
+//                    } else {
+//                        firstnameTextField.setText("");
+//                        lastnameTextField.setText("");
+//                        notesTextArea.setText("");
+//                    }
+//                });
+//
+//        // Pre-select the first item
+//        listView.getSelectionModel().selectFirst();
+//
+//    }
+//
+//    @FXML
+//    private void handleKeyAction(KeyEvent keyEvent) {
+//        modifiedProperty.set(true);
+//    }
+//
+//    @FXML
+//    private void createButtonAction(ActionEvent actionEvent) {
+//        System.out.println("Create");
+//        Person person = new Person(firstnameTextField.getText(),
+//                lastnameTextField.getText(), notesTextArea.getText());
+//        personList.add(person);
+//        // and select it
+//        listView.getSelectionModel().select(person);
+//    }
+//
+//    @FXML
+//    private void removeButtonAction(ActionEvent actionEvent) {
+//        System.out.println("Remove " + selectedPerson);
+//        personList.remove(selectedPerson);
+//    }
+//
+//    @FXML
+//    private void updateButtonAction(ActionEvent actionEvent) {
+//        System.out.println("Update " + selectedPerson);
+//        Person p = listView.getSelectionModel().getSelectedItem();
+//        listView.getSelectionModel().selectedItemProperty().removeListener(personChangeListener);
+//        p.setFirstname(firstnameTextField.getText());
+//        p.setLastname(lastnameTextField.getText());
+//        p.setNotes(notesTextArea.getText());
+//        listView.getSelectionModel().selectedItemProperty().addListener(personChangeListener);
+//        modifiedProperty.set(false);
+//    }
+
+
+
+
+
+
+
+
+
 }

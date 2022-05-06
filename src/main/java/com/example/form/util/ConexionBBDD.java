@@ -23,6 +23,17 @@ public class ConexionBBDD {
         return conexion;
     }
 
+
+    public void ejecutarConsultaDelete(String consulta){
+        Statement statement = null;
+        try {
+            statement = conexion.createStatement();
+            statement.execute(consulta);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public ResultSet ejecutarConsulta(String consulta){
         Statement statement = null;
         ResultSet queryOutput = null;
